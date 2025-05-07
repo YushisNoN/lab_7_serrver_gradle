@@ -1,0 +1,58 @@
+create table coordinates
+(
+  id serial not null primary key,
+  x bigint not null check ( x > -852 ),
+  y int not null
+);
+
+
+create table loc
+(
+  id serial not null primary key ,
+  x bigint,
+  y double precision not null,
+  z double precision
+);
+
+create table person
+(
+    id serial not null primary key,
+
+    name varchar(255) not null  check ( name <> ''),
+
+    height float check ( height > 0 ),
+
+    eyeColor varchar(100) check ( eyeColor  <> ''),
+
+    hairColor varchar(100) not null check ( hairColor <> '' ),
+
+    nationality varchar(100) not null check ( nationality <> '' ),
+
+    location_id int not null,
+
+    foreign key (location_id) references loc (id)
+);
+
+
+create table product
+(
+    id serial not null primary key,
+
+    name varchar(255) not null check ( name <> '' ),
+
+    coordinates_id int not null,
+
+    owner_id int not null,
+
+    foreign key (coordinates_id) references coordinates (id),
+
+    foreign key (owner_id) references person(id),
+
+    creationDate timestamp not null,
+
+    price int check ( price > 0 ),
+
+    unitOfMeasure varchar(100) check ( unitOfMeasure <> '' ),
+
+);
+
